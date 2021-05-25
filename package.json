@@ -1,0 +1,33 @@
+{
+  "name": "crawler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node src/main.ts",
+    "test": "ts-node ./test/src/testIndex.ts",
+    "json_analyze_test": "ts-node src/models/crawler.ts",
+    "xls_analyze_test": "ts-node ./src/XlsAnalyze.ts",
+    "mysql_connect_test": "ts-node ./src/SQLConnect.ts",
+    "log_test": "ts-node src/components/log4js.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/log4js": "^2.3.5",
+    "@types/mysql": "^2.15.18",
+    "@types/node-xlsx": "^0.15.1",
+    "@types/superagent": "^4.1.11",
+    "axios": "^0.21.1",
+    "cheerio": "^1.0.0-rc.6",
+    "log4js": "^6.3.0",
+    "node-xlsx": "^0.16.1",
+    "superagent": "^6.1.0",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "mysql": "^2.18.1"
+  }
+}

@@ -1,0 +1,20 @@
+# node 第三方模块
+node_modules/
+
+# powershell运行脚本
+clean_output.ps1
+clean_today_log.ps1
+
+# report
+report.20210518.213952.4988.0.001.json
+
+# 外部资源文件（excel表格）
+resource/
+
+# 输入文件
+out/
+
+# 输出日志文件
+logs/*
+
+# 项目配置文件
