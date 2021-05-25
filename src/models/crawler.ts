@@ -1,15 +1,25 @@
 import {logsys} from "../components/log4js";
 import {https} from "../components/axios"
 
+/**
+ * 请求参数列表
+ */
+interface RequestParams {
+    [name: string]: any
+}
+
+/**
+ * 爬虫定义
+ */
 export default class Crawler {
-    private productId: string/** 商品编码 *///请求参数
-    private router: string // 请求路由
-    public crawledResult: any = null
+    private _params: RequestParams//请求参数
+    private _router: string // 请求路由
+    public crawledResult: any = null //扒取结果原格式
 
-    public set setRouter(router: string) { this.router = router }
-    public set setProductId(productId: string) { this.productId = productId }
+    public set router(router: string) { this._router = router }
+    public set params(params: RequestParams) { this._params = params }
 
-    public get getProductId(): string { return this.productId }
+    public get params(): RequestParams { return this._params }
 
 
 
@@ -23,20 +33,18 @@ export default class Crawler {
         await https.get(
             this.router,
             {
-                params: {
-                    productId: this.productId
-                }
+                params: this._params
             },
         ).then(response => {
             if (response.data !== null) {
                 this.crawledResult = response.data.data.data.goodsInfos
             } else {
                 let logger = logsys.getLogger("info")
-                logger.info("商品ID：" + this.productId + " 扒取失败")
+                logger.info("爬取参数：" + this._params + " 扒取失败!")
             }
         }).catch(error => {
             let logger = logsys.getLogger("error")
-            logger.error("商品ID：" + this.productId + " 扒取失败")
+            logger.error("爬取参数：" + this._params + " 扒取失败!")
         })
     }
 }
