@@ -1,122 +1,66 @@
 import xlsx from "node-xlsx";
-import {transFromExcelTOXLSData} from "../config/excelConfig";
+import {logsys} from "../components/log4js";
 
-/**
- * 对应excel中的每一行信息
- */
-export class XLSItem {
-    private readonly productCode: string //商品编号
-    private readonly productId: string //商品ID
-    private productName: string //商品名称
-    private readonly productCateName: string //类目名称
-    private productCostPrice?: number //商品成本价格
-    private readonly productRetailPrice?: number //商品销售价格
-
-    public get getProductCode(): string {
-        return this.productCode
-    }
-
-    public get getProductId(): string {
-        return this.productId
-    }
-
-    public get getProductName(): string {
-        return this.productName
-    }
-
-    public get getProductCateName(): string {
-        return this.productCateName
-    }
-
-    public get getProductCostPrice(): number {
-        return this.productCostPrice
-    }
-
-    public get getProductRetailPrice(): number {
-        return this.productRetailPrice
-    }
-
-    public set setProductName(productName: string) {
-        this.productName = productName
-    }
-
-    public set setProductCostPrice(productCostPrice: number) {
-        this.productCostPrice = productCostPrice
-    }
-
-    /**
-     * 第一列：商品编码（productCode或者productSn)
-     * 第二列：商品ID（productID）
-     * 第三列：商品名称（productName）
-     * 第四列：商品类型名或商品类型路径名（productCateName）
-     * 第五列：商品销售价格（productRetailPrice）
-     * 第六列：商品成本价格（productCostPrice）可选项；没有时，这一列需要空出
-     * @param excelFromItem
-     * @constructor
-     */
-    public constructor(excelFromItem: Array<any>) {
-        this.productCode = excelFromItem[transFromExcelTOXLSData.productCodeIndex]
-        this.productId = excelFromItem[transFromExcelTOXLSData.productIdIndex]
-        this.productName = excelFromItem[transFromExcelTOXLSData.productNameIndex]
-        this.productCateName = excelFromItem[transFromExcelTOXLSData.productCateNameIndex]
-        this.productRetailPrice = excelFromItem[transFromExcelTOXLSData.productRetailPriceIndex]
-        // this.productCostPrice = excelFromItem[5]
-    }
+interface Tuple {
+    [attribute: string]: any
 }
 
 /**
  * 对应excel中的所用信息
  */
-export class XLSData extends Array<XLSItem> {
+export class Excel  {
+    private readonly _titles: Map<string, number> //excel标题栏
+    private readonly _tuples: Map<number, Tuple> //excel数据
+    private readonly _total: number //excel数据总数
+    private readonly _excelIndexName: string //excel索引名称（唯一主键）
+    private readonly _excelIndexTable: Map<any, number>
+
+    public get total(): number { return this._total }
+    public get titles(): Map<string, number> { return this._titles }
 
     /**
      * 创建excel与XLSData对象的映射关系，将excel数据存储在XLSData对象中
-     * @param? excel excel表单数据
+     * @param excelTable excel表单数据
+     * @param excelIndexName
      * @constructor
      */
-    public constructor(excelTable?: Array<Array<any>>) {
-        super()
-        for (let i = 1; i < excelTable.length; i++) {
-            this.push(new XLSItem(excelTable[i]))
+    constructor(excelTable: Array<Array<any>>, excelIndexName?: any) {
+        this._excelIndexName = excelIndexName
+        this._excelIndexTable = new Map<any, number>()
+        this._titles = new Map<string, number>()
+        this._tuples = new Map<number, Tuple>()
+        this._total = excelTable.length - 1
+        for (let i = 0; i < excelTable[0].length; i++) {
+            this._titles.set(excelTable[0][i], i)
         }
-    }
-
-    /**
-     * excel数据去重
-     * @param condition 条件数组
-     */
-    private unique(condition: Array<string>): XLSData {
-        return null
-    }
-
-    /**
-     * 处理商品中，商品类型没有匹配上的商品
-     * @param condition 条件数组
-     * @param field 当条件被激活时，触犯条件的商品名称被替换为filed
-     */
-    public dataClean(condition: () => Array<string>, field: string): void {
-        let cateNameList: Array<string> = condition()
-        this.forEach(xlsItem => {
-            if (!cateNameList.includes(xlsItem.getProductCateName)) {
-                xlsItem.setProductName = field
-            }
-        })
-    }
-
-    /**
-     * 找到商品ID项目的商品
-     * @return 商品ID数组
-     */
-    public get repeatedItems(): Array<string> {
-        let record = new Array<string>()
-        let repeatId = 0
-        for (let i = 1; i < this.length - 1; i++) {
-            if (this[i].getProductId !== this[i - 1].getProductId && this[i].getProductId === this[i + 1].getProductId) {
-                record.push(this[i].getProductName)
+        if (this._excelIndexName !== undefined) {
+            if (this._titles.has(this._excelIndexName)) {
+                for (let i = 1; i < excelTable.length; i++) {
+                    let item: Tuple = {}
+                    this._titles.forEach((value, key) => {
+                        item[key] = excelTable[i][value]
+                        if (key === this._excelIndexName)
+                            this._excelIndexTable.set(excelTable[i][value], i)
+                    })
+                    this._tuples.set(i - 1, item)
+                }
+            } else {
+                logsys.getLogger("error").error("所设定查询索引：" + this._excelIndexName + " 不为Excel的列属性成员")
             }
         }
-        return record
     }
+
+    /**
+     * excel中的所有数据（不包括标题栏）
+     * @return excel中的所有数据
+     */
+    public get tuples(): Map<number, Tuple> { return this._tuples }
+
+    /**
+     * @return excel索引列表
+     */
+    public get excelIndexTable(): Map<any, number> { return this._excelIndexTable }
+
 }
 
 /**
@@ -143,15 +87,16 @@ export function mappingCate(excelData: Array<Array<any>>): Categories {
 
 /**
  * 读取excel数据，并作简单处理
- * @param path
+ * @param path excel文件路径
+ * @param excelIndexName excel表格唯一主键
  */
-export function readExcelData(path: string): XLSData {
+export function readExcelData(path: string, excelIndexName?: any):  Excel {
     const sheets1 = xlsx.parse(path)
     const excelData = sheets1[0].data
     const excelFiltered1 = excelData.filter(excelItem => {
         return excelItem[1] !== undefined
     })
-    return new XLSData(excelFiltered1)
+    return new Excel(excelFiltered1, excelIndexName)
 }
 
 /**
@@ -163,3 +108,14 @@ export function readExcelCategories(path: string): Categories {
     const excelFiltered2 = sheets2[0].data
     return mappingCate(excelFiltered2)
 }
+
+
+/**
+ * 单元测试
+ */
+// const excel = readExcelData("./resource/test.xlsx", "goodsId")
+// console.log(excel.excelIndexTable)
+
+// for (let i = 1; i <= excel.total; i++) {
+//     console.log(excel.tuples.get(i))
+// }
