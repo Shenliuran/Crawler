@@ -1,6 +1,6 @@
-import {AddRequest} from "../core/Impl/requestPayloadImpl";
+import {AddRequest} from "../modules/Impl/requestPayloadImpl";
 import {logsys} from "../components/log4js";
-import {Excel} from "../core/excelAnalyze";
+import {Excel} from "../modules/excelAnalyze";
 import * as path from "path";
 import {https, sleep} from "../components/axios";
 import {postRequestSleep} from "../config/requestConfig";

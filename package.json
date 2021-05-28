@@ -6,11 +6,11 @@
   "scripts": {
     "dev": "ts-node src/main.ts",
     "test": "ts-node ./test/src/testIndex.ts",
-    "json_analyze_test": "ts-node src/core/crawler.ts",
+    "json_analyze_test": "ts-node src/modules/crawler.ts",
     "xls_analyze_test": "ts-node ./src/XlsAnalyze.ts",
     "mysql_connect_test": "ts-node ./src/SQLConnect.ts",
     "log_test": "ts-node src/components/log4js.ts",
-    "excel_test": "ts-node src/core/excelAnalyze.ts"
+    "excel_test": "ts-node src/modules/excelAnalyze.ts"
   },
   "keywords": [],
   "author": "",

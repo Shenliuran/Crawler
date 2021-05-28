@@ -1,5 +1,5 @@
-import {RequestHeaders} from "../core/httpAnalyze";
-import {Header} from "../core/Impl/requestPayloadImpl";
+import {RequestHeaders} from "../modules/httpAnalyze";
+import {Header} from "../modules/Impl/requestPayloadImpl";
 
 export const testPostUrl = "https://110.api.jxjsyyjt.com/merchant/changeProduct"
 export const testHeaders: RequestHeaders = {
