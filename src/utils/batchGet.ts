@@ -49,9 +49,10 @@ async function assembleOne(excelIndexName: string, xlsItem: Tuple, header: Heade
 export async function batchGet(xlsData: Excel, header: Header, getRequestUrl, categories: Categories, regex: RegExp, template: AddBody) {
     console.log("*********************************************************")
     console.log("batchGet(...params)：开始扒取商品...\n")
-    xlsData.tuples.forEach((value, key) => {
-        assembleOne(xlsData.excelIndexName, value, header, getRequestUrl, categories, regex, template)
-    })
+    let values = Array.from(xlsData.tuples.values())
+    for (let value of values) {
+       await assembleOne(xlsData.excelIndexName, value, header, getRequestUrl, categories, regex, template)
+    }
     console.log("所有商品扒取完成！\n")
     console.log("*********************************************************")
 }
