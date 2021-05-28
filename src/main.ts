@@ -1,4 +1,4 @@
-import {readExcelCategories, readExcelData} from "./modules/excelAnalyze";
+import {readExcelCategories, readExcelData} from "./core/excelAnalyze";
 import {categoryTablePath, dataTablePath} from "./config/excelConfig";
 import {getUrl, header, headers, postUrl} from "./config/requestConfig";
 import {imgRegex} from "./config/regexConfig";

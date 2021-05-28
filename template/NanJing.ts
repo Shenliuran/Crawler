@@ -1,4 +1,4 @@
-import {AddBody} from "../src/modules/Impl/requestPayloadImpl";
+import {AddBody} from "../src/core/Impl/requestPayloadImpl";
 
 export const addProductTemplate_nanjing: AddBody = {
     actionType: 'ADD',
