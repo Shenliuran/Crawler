@@ -1,5 +1,5 @@
 import {AddBody, regexSplit, YaoHealthProductInfo} from "../models/jsonAnalyze";
-import {Categories, XLSItem} from "../models/excelAnalyze";
+import {Categories, Tuple} from "../models/excelAnalyze";
 import Crawler from "../models/crawler";
 
 /**
@@ -11,15 +11,15 @@ import Crawler from "../models/crawler";
  * @param categories 商品类型与编码的映射关系
  * @param regex 图片url匹配的正则表达式
  */
-export function packaging(crawler: Crawler,target: AddBody, resFromWeb: YaoHealthProductInfo, resFromXLS: XLSItem, categories: Categories, regex: RegExp) {
+export function packing(crawler: Crawler, target: AddBody, resFromWeb: YaoHealthProductInfo, resFromXLS: Tuple, categories: Categories, regex: RegExp) {
     let detailImages: string = crawler.crawledResult.description
-    target.productName = resFromXLS.getProductName
+    target.productName = resFromXLS["productName"]
     // target.unitPrice = resFromXLS.productRetailPrice
     target.unitPrice = resFromWeb.retailPrice
     target.productCostPrice = resFromWeb.retailPrice * 0.6
     target.unitPriceStandard = target.unitPrice
 
-    target.productCateDTO.productCateUuid = resFromXLS.getProductCateName != '其他' ? categories.get(resFromXLS.getProductCateName) : 'ff80808178fc35f3017911db2ca50258'
+    target.productCateDTO.productCateUuid = resFromXLS["productName"] != '其他' ? categories.get(resFromXLS["productName"]) : 'ff80808178fc35f3017911db2ca50258'
     let mainImageUrl = resFromWeb.pageImgs[0].imgPath
     if (mainImageUrl.match(regex)) {
         mainImageUrl = mainImageUrl.replace('static.pharmakeyring.com', 'cdn2.jxjsyyjt.com')

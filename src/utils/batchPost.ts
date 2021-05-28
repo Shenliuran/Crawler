@@ -1,6 +1,6 @@
 import {AddRequest} from "../models/jsonAnalyze";
 import {logsys} from "../components/log4js";
-import {XLSData} from "../models/excelAnalyze";
+import {Excel} from "../models/excelAnalyze";
 import * as path from "path";
 import {https, sleep} from "../components/axios";
 import {postRequestSleep} from "../config/requestConfig";
@@ -46,12 +46,13 @@ async function add(headers: {}, request: AddRequest, postUrl: string) {
  * @param headers 浏览器请求发送模拟
  * @param postUrl 请求接口
  */
-export async function batchPost(xlsDate: XLSData, headers: {}, postUrl: string) {
+export async function batchPost(xlsDate: Excel, headers: {}, postUrl: string) {
     console.log("*********************************************************")
     console.log("batchPost(...params)：开始批量发送post请求...\n")
     logsys.getLogger("record").trace("开始记录未插入成功的商品...")
-    for (let xlsItem of xlsDate) {
-        let headersPath = path.resolve(__dirname, "../../out/" + xlsItem.getProductId + "-headers.json")
+    // @ts-ignore
+    for (let xlsItem of xlsDate.tuples.values()) {
+        let headersPath = path.resolve(__dirname, "../../out/" + xlsItem["productId"] + "-headers.json")
         let request = require(headersPath)
         await add(headers, request, postUrl)
         await sleep(postRequestSleep)

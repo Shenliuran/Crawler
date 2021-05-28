@@ -1,7 +1,7 @@
 import xlsx from "node-xlsx";
 import {logsys} from "../components/log4js";
 
-interface Tuple {
+export interface Tuple {
     [attribute: string]: any
 }
 
@@ -17,6 +17,7 @@ export class Excel  {
 
     public get total(): number { return this._total }
     public get titles(): Map<string, number> { return this._titles }
+    public get excelIndexName(): string { return this._excelIndexName }
 
     /**
      * 创建excel与XLSData对象的映射关系，将excel数据存储在XLSData对象中
@@ -34,7 +35,7 @@ export class Excel  {
             this._titles.set(excelTable[0][i], i)
         }
         if (this._excelIndexName !== undefined) {
-            if (this._titles.has(this._excelIndexName)) {
+            if (this._titles.get(this._excelIndexName) !== undefined) {
                 for (let i = 1; i < excelTable.length; i++) {
                     let item: Tuple = {}
                     this._titles.forEach((value, key) => {
