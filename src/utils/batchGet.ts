@@ -1,6 +1,6 @@
-import {Categories, Tuple, Excel} from "../models/excelAnalyze";
-import {AddBody, AddRequest, Header, YaoHealthProductInfo} from "../models/Impl/requestPayloadImpl";
-import Crawler from "../models/crawler";
+import {Categories, Tuple, Excel} from "../modules/excelAnalyze";
+import {AddBody, AddRequest, Header, YaoHealthProductInfo} from "../modules/Impl/requestPayloadImpl";
+import Crawler from "../modules/crawler";
 import {addProductTemplate_jiangsu} from "../../template/JiangSu";
 import * as path from "path"
 import {packing} from "./packing";

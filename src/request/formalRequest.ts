@@ -1,5 +1,5 @@
-import {Header} from "../models/Impl/requestPayloadImpl";
-import {RequestHeaders} from "../models/httpAnalyze";
+import {Header} from "../modules/Impl/requestPayloadImpl";
+import {RequestHeaders} from "../modules/httpAnalyze";
 
 export const formalPostUrl = undefined
 export const formalHeader: Header = {

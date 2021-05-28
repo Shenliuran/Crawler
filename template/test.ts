@@ -1,4 +1,4 @@
-import {AddBody} from "../src/models/Impl/requestPayloadImpl";
+import {AddBody} from "../src/modules/Impl/requestPayloadImpl";
 
 export const addProductTemplate_test: AddBody = {
     actionType: 'ADD',

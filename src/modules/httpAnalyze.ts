@@ -1,3 +1,6 @@
+/**
+ * Http请求报文头
+ */
 export interface RequestHeaders {
     [params: string]: any
 }

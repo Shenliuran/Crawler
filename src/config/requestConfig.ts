@@ -1,4 +1,4 @@
-import {Header} from "../models/Impl/requestPayloadImpl";
+import {Header} from "../modules/Impl/requestPayloadImpl";
 import {testHeader, testHeaders, testPostUrl} from "../request/testRequest";
 
 

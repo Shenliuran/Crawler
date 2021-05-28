@@ -1,4 +1,4 @@
-import {readExcelCategories, readExcelData} from "./models/excelAnalyze";
+import {readExcelCategories, readExcelData} from "./modules/excelAnalyze";
 import {categoryTablePath, dataTablePath} from "./config/excelConfig";
 import {getUrl, header, headers, postUrl} from "./config/requestConfig";
 import {imgRegex} from "./config/regexConfig";
@@ -11,7 +11,7 @@ import {addProductTemplate_jiangsu} from "../template/JiangSu";
 /**
  * 读取excel数据
  */
-const xlsData = readExcelData(dataTablePath)
+const xlsData = readExcelData(dataTablePath, "productId")
 
 /**
  * 读取categories信息
