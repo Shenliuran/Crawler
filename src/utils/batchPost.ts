@@ -1,4 +1,4 @@
-import {AddRequest} from "../models/jsonAnalyze";
+import {AddRequest} from "../models/Impl/requestPayloadImpl";
 import {logsys} from "../components/log4js";
 import {Excel} from "../models/excelAnalyze";
 import * as path from "path";

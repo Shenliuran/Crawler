@@ -1,4 +1,4 @@
-import {AddBody} from "../src/models/jsonAnalyze";
+import {AddBody} from "../src/models/Impl/requestPayloadImpl";
 
 export const addProductTemplate_jiangsu: AddBody = {
     actionType: 'ADD',

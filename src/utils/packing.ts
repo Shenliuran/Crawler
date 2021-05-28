@@ -1,6 +1,7 @@
-import {AddBody, regexSplit, YaoHealthProductInfo} from "../models/jsonAnalyze";
+import {AddBody, YaoHealthProductInfo} from "../models/Impl/requestPayloadImpl";
 import {Categories, Tuple} from "../models/excelAnalyze";
 import Crawler from "../models/crawler";
+import {regexSplit} from "../models/regexAnalyze";
 
 /**
  * 将爬取的json内容与excel数据组装成添加商品的请求的body

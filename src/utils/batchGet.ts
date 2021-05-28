@@ -1,5 +1,5 @@
 import {Categories, Tuple, Excel} from "../models/excelAnalyze";
-import {AddBody, AddRequest, Header, YaoHealthProductInfo} from "../models/jsonAnalyze";
+import {AddBody, AddRequest, Header, YaoHealthProductInfo} from "../models/Impl/requestPayloadImpl";
 import Crawler from "../models/crawler";
 import {addProductTemplate_jiangsu} from "../../template/JiangSu";
 import * as path from "path"
