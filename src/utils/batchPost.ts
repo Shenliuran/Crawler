@@ -52,7 +52,7 @@ export async function batchPost(xlsDate: Excel, headers: {}, postUrl: string) {
     logsys.getLogger("record").trace("开始记录未插入成功的商品...")
     // @ts-ignore
     for (let xlsItem of xlsDate.tuples.values()) {
-        let headersPath = path.resolve(__dirname, "../../out/" + xlsItem["productId"] + "-headers.json")
+        let headersPath = path.resolve(__dirname, "../../out/" + xlsItem[xlsDate.excelIndexName] + "-headers.json")
         let request = require(headersPath)
         await add(headers, request, postUrl)
         await sleep(postRequestSleep)
