@@ -12,8 +12,8 @@ interface RequestParams {
  * 爬虫定义
  */
 export default class Crawler {
-    private _params: RequestParams//请求参数
-    private _router: string // 请求路由
+    private _params: RequestParams = {}//请求参数
+    private _router: string = ""// 请求路由
     private _crawlingKey: any = undefined
     public crawledResult: any = null //扒取结果原格式
 

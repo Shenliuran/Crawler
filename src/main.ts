@@ -57,6 +57,5 @@ function verify() {
         process.exit(-1)
     })
 }
-
-// verify()
-main()
+verify()
+//main()

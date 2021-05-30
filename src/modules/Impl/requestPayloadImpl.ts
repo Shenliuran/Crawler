@@ -23,7 +23,7 @@ export interface AddBody extends RequestPayloadBody {
     hot: boolean
     new: string
     productCateDTO: {
-        productCateUuid: string
+        productCateUuid: string | undefined
     }
     attrList: []
     onSale: string

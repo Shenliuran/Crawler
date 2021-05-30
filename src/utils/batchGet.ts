@@ -18,7 +18,7 @@ import {getRequestSleep} from "../config/requestConfig";
  * @param regex 正则匹配表达式
  * @param addBody
  */
-async function assembleOne(excelIndexName: string, xlsItem: Tuple, header: Header, getRequestUrl, categories: Categories, regex: RegExp, addBody: AddBody) {
+async function assembleOne(excelIndexName: string, xlsItem: Tuple, header: Header, getRequestUrl: string, categories: Categories, regex: RegExp, addBody: AddBody) {
     console.log("fetchOne(...params)：正在扒取商品ID为：" + xlsItem[excelIndexName] + " 的商品...")
     let crawler = new Crawler()
     crawler.params = {productId: xlsItem[excelIndexName]}
@@ -31,9 +31,10 @@ async function assembleOne(excelIndexName: string, xlsItem: Tuple, header: Heade
     addBody.productImages.shift()
     addBody.productDescImages.shift()
     let rawRequest: AddRequest = {header: header, body: addBody}
-    let filePath2 = path.resolve(__dirname, "..\\..\\out\\" + crawler.params["productId"] + "-headers.json")
+    let outPath = path.resolve(__dirname, "../../out/" + crawler.params["productId"] + "-headers.json")
+    console.log("输出目录: " + outPath)
     let request = JSON.stringify(rawRequest)
-    fs.writeFileSync(filePath2, request)
+    fs.writeFileSync(outPath, request)
     console.log("当前商品扒取成功!\n")
 }
 
@@ -46,7 +47,7 @@ async function assembleOne(excelIndexName: string, xlsItem: Tuple, header: Heade
  * @param regex 正则匹配表达式
  * @param template 请求模板
  */
-export async function batchGet(xlsData: Excel, header: Header, getRequestUrl, categories: Categories, regex: RegExp, template: AddBody) {
+export async function batchGet(xlsData: Excel, header: Header, getRequestUrl: string, categories: Categories, regex: RegExp, template: AddBody) {
     console.log("*********************************************************")
     console.log("batchGet(...params)：开始扒取商品...\n")
     let values = Array.from(xlsData.tuples.values())

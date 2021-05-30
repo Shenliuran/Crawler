@@ -4,7 +4,7 @@
  * @param str 需要匹配的字符串
  */
 export function regexSplit(regExp: RegExp, str: string): Array<string> {
-    let matchResult: Array<string>
+    let matchResult: RegExpExecArray | null
     let resultList: Array<string> = []
     console.log("regexSplit(...params)：正在解析图片...")
     while ((matchResult = regExp.exec(str)) !== null) {

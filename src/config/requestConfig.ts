@@ -6,5 +6,5 @@ export const getUrl = "https://wap.pharmakeyring.com/wsc/goods/findGoodsInfoBasi
 export const postUrl = testPostUrl
 export const header: Header = testHeader
 export const headers = testHeaders
-export const getRequestSleep = 5000
-export const postRequestSleep = 5000
+export const getRequestSleep = 3000
+export const postRequestSleep = 3000
