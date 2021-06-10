@@ -15,7 +15,7 @@ import {getRequestSleep} from "../../src/config/requestConfig";
  * @param getRequestUrl 扒取的目标网站
  * @param categories 类型
  * @param regex 正则匹配表达式
- * @param template 请求模板
+ * @param addBody 请求模板
  */
 async function assembleOne(xlsItem: Tuple, header: Header, getRequestUrl, categories: Categories, regex: RegExp, addBody: AddBody) {
     console.log("fetchOne(...params)：正在扒取商品ID为：" + xlsItem["productId"] + " 的商品...")

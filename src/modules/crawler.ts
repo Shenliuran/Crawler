@@ -9,7 +9,7 @@ interface RequestParams {
 }
 
 /**
- * 爬虫定义
+ * 爬虫对象定义
  */
 export default class Crawler {
     private _params: RequestParams = {}//请求参数
